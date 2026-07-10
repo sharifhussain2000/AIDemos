@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Scheme Participation Console — Bayer Seeds & CP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="top">
+  <div>
+    <div class="eyebrow"><span class="tag">Bayer CropScience</span> · Seeds &amp; Crop Protection</div>
+    <h1>Scheme Participation Console</h1>
+    <div class="eyebrow" style="margin-top:6px">Strategic fit × Golden Triangle <span style="color:var(--gold)">( Cash · Cost · Margin )</span></div>
+  </div>
+  <div class="selwrap">
+    <span class="eyebrow">Select scheme</span>
+    <select id="scheme"></select>
+  </div>
+  <div class="verdict">
+    <span class="eyebrow">Verdict</span>
+    <span id="quadChip" class="chip">—</span>
+    <span id="recLine" class="recline">—</span>
+  </div>
+</div>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="grid cols-2" style="margin-bottom:14px">
+  <div class="panel">
+    <h3><span class="dot" style="background:var(--gold)"></span>Golden Triangle — commercial viability</h3>
+    <div class="tri-wrap">
+      <svg id="triSvg" width="232" height="208" viewBox="0 0 232 208"></svg>
+      <div class="legs" id="legs"></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3><span class="dot" style="background:var(--teal)"></span>Live insights</h3>
+    <div class="ins" id="insights"></div>
+  </div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:14px">
+  <div class="panel">
+    <h3><span class="dot" style="background:var(--steel)"></span>Inputs — edit to see it move</h3>
+    <div id="controls"></div>
+  </div>
+  <div class="panel">
+    <h3><span class="dot" style="background:var(--gold)"></span>Portfolio map · strategic (x) × triangle (y)</h3>
+    <svg id="mapSvg" viewBox="0 0 480 360"></svg>
+    <div class="maplegend">
+      <span><i style="background:var(--teal)"></i>Prioritise / Lead</span>
+      <span><i style="background:var(--gold)"></i>Re-engineer commercials</span>
+      <span><i style="background:var(--steel)"></i>Opportunistic / Tactical</span>
+      <span><i style="background:var(--slate)"></i>Monitor / Avoid</span>
+      <span><i style="background:var(--red)"></i>Excluded (gate)</span>
+      <span style="color:var(--faint)">bubble = addressable ₹</span>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
+    <h3 style="margin:0"><span class="dot" style="background:var(--gold)"></span>All schemes — ranked by priority (live)</h3>
+    <div class="toolbar">
+      <button class="btn gold" id="newBtn">+ New scheme</button>
+      <button class="btn" id="resetBtn">Reset scheme</button>
+      <button class="btn" id="removeBtn" style="display:none">Remove scheme</button>
+      <button class="btn" id="exportBtn">Download data (CSV)</button>
+    </div>
+  </div>
+  <table id="rankTable">
+    <thead><tr>
+      <th>#</th><th>Scheme</th><th>Strat</th><th>Triangle</th><th>Overall</th>
+      <th>Prize ₹Cr</th><th>Priority</th><th style="text-align:left">Quadrant</th>
+    </tr></thead>
+    <tbody id="rankBody"></tbody>
+  </table>
+
+  <details class="weights">
+    <summary>Adjust model weights, thresholds &amp; prize bands</summary>
+    <div class="wgrid" id="weights"></div>
+  </details>
+</div>
+
+<div class="foot">
+  Edits are session-only (use <b>Download data</b> to keep a copy; <b>Reset scheme</b> restores seeded values). Scheme
+  names and participation mechanics are real; the 1–5 scores, payment-lag days, margins and prize sizing are illustrative
+  starting hypotheses — confirm <b>Cash</b> from PFMS and <b>Margin</b> against price-control/GST before any budget call.
+</div>
+
+<div class="overlay" id="overlay">
+ <div class="modal">
+  <h2>Add a scheme by name</h2>
+  <div class="sub">Type the scheme name — the console researches it live and builds the full scorecard, insights, sources and recommendation, judged for Bayer seeds &amp; crop protection. Every generated scheme is tagged with its provenance, so review before trusting.</div>
+  <div class="field"><label>Scheme name</label><input id="f_name" placeholder="e.g. Rythu Bharosa · NFSM · MahaDBT · NMEO-Oilseeds"></div>
+  <div class="field"><label>Region / identifying hint (optional)</label><input id="f_st" placeholder="state or any detail that pins down which scheme"></div>
+  <div class="acts">
+    <span class="genstate" id="genState"></span>
+    <button class="btn" id="cancelAdd">Cancel</button>
+    <button class="btn" id="genHeur">Quick estimate</button>
+    <button class="btn gold" id="genAI">Research &amp; score</button>
+  </div>
+  <details class="hints"><summary>Add hints to sharpen the result (optional)</summary>
+    <div class="field2" style="margin-top:10px">
+      <div class="field"><label>Level</label><select id="f_lvl"><option>Central</option><option>State</option></select></div>
+      <div class="field"><label>Scheme type</label><select id="f_type">
+        <option>Seed supply / minikit</option><option>Input subsidy (DBT)</option><option>Horticulture / Veg</option>
+        <option>IPM / Demo</option><option>Mechanization</option><option>Crop insurance</option>
+        <option>Cash transfer</option><option>Price support</option><option>Natural / Organic</option><option>Digital / Other</option>
+      </select></div>
+    </div>
+    <div class="field2">
+      <div class="field"><label>Payment mechanism</label><select id="f_pay">
+        <option>DBT / e-RUPI</option><option>Reimbursement</option><option>Mixed</option><option>Cash to farmer</option>
+      </select></div>
+      <div class="field"><label>Focus crops</label><input id="f_crops" placeholder="cotton, maize, veg…"></div>
+    </div>
+    <div class="togrow">
+      <label class="t"><span class="toggle" id="f_chem" data-on="0"></span> Chemical-free / organic-only</label>
+      <label class="t"><span class="toggle on" id="f_seed" data-on="1"></span> Allows private hybrid / Bt seed</label>
+    </div>
+    <div class="field3">
+      <div class="field"><label>Elig base ’000</label><input id="f_base" type="number" placeholder="auto"></div>
+      <div class="field"><label>Spend ₹/unit</label><input id="f_spend" type="number" placeholder="auto"></div>
+      <div class="field"><label>Bayer share %</label><input id="f_share" type="number" placeholder="auto"></div>
+    </div>
+    <div class="field"><label>Notes (optional)</label><textarea id="f_notes" placeholder="Anything you already know — feeds the research"></textarea></div>
+  </details>
+ </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="app.js" defer></script>
+
+
+</body>
+</html>
