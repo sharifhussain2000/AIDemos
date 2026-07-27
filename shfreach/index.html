@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FarmRise FB → WhatsApp - Fun Quiz Campaign</title>
+    <title>FarmRise Pilot - Interactive A/B Testing Demo</title>
     <style>
         * {
             margin: 0;
@@ -12,11 +12,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #f0f2f5;
-            min-height: 100vh;
             padding: 20px;
-            overflow-x: hidden;
+            color: #333;
         }
 
         .container {
@@ -24,265 +23,174 @@
             margin: 0 auto;
         }
 
-        header {
+        .header {
             text-align: center;
             margin-bottom: 30px;
+            background: linear-gradient(135deg, #1a472a 0%, #2d6e48 100%);
             color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 12px;
         }
 
-        header h1 {
-            font-size: 36px;
+        .header h1 {
+            font-size: 32px;
             margin-bottom: 10px;
-            font-weight: 700;
         }
 
-        header p {
+        .header p {
             font-size: 16px;
-            opacity: 0.95;
+            opacity: 0.9;
         }
 
-        /* ===== FACEBOOK FEED STYLING ===== */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Facebook Feed Section */
         .facebook-section {
-            max-width: 500px;
-            margin: 0 auto 40px;
+            background: #f0f2f5;
         }
 
-        .facebook-feed-wrapper {
-            background: #fff;
-            border-radius: 0;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+        .facebook-feed {
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .fb-post {
             background: white;
-            margin-bottom: 16px;
-            border-radius: 0;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
-        .fb-post-header {
+        .fb-header {
+            display: flex;
+            align-items: center;
             padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
             border-bottom: 1px solid #e5e5e5;
-        }
-
-        .fb-post-author {
-            display: flex;
-            gap: 8px;
-            flex: 1;
         }
 
         .fb-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1a472a 0%, #2d6e48 100%);
-            color: white;
+            background: linear-gradient(135deg, #66bb6a 0%, #2d6e48 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 18px;
-            flex-shrink: 0;
+            color: white;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 20px;
         }
 
-        .fb-author-info h3 {
-            font-size: 13px;
-            font-weight: 600;
-            color: #050505;
-            margin-bottom: 4px;
+        .fb-info {
+            flex: 1;
         }
 
-        .fb-author-info p {
+        .fb-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .fb-time {
             font-size: 12px;
+            color: #999;
+        }
+
+        .fb-sponsored {
+            background: #f0f2f5;
             color: #65676b;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-left: 8px;
         }
 
-        .fb-post-menu {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            color: #65676b;
-            padding: 0;
+        .fb-content {
+            padding: 16px;
         }
 
-        .fb-post-content {
-            padding: 0 16px 12px;
-        }
-
-        .fb-post-text {
-            font-size: 13px;
-            color: #050505;
-            line-height: 1.5;
+        .fb-text {
+            font-size: 15px;
+            line-height: 1.6;
             margin-bottom: 12px;
         }
 
-        .fb-post-text strong {
-            color: #1a472a;
-            font-weight: 600;
-        }
-
-        .fb-banner-image {
-            width: 100%;
-            height: 280px;
-            background: linear-gradient(135deg, #1a472a 0%, #2d6e48 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 28px;
+        .fb-emoji {
+            font-size: 48px;
             text-align: center;
-            padding: 20px;
-            border: 1px solid #e5e5e5;
-            animation: pulse 2s infinite;
-            margin-bottom: 12px;
+            margin: 16px 0;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        .fb-cta {
+            width: 100%;
+            padding: 12px;
+            background: #2d6e48;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
         }
 
-        .fb-post-stats {
-            padding: 8px 16px;
-            border-top: 1px solid #e5e5e5;
-            border-bottom: 1px solid #e5e5e5;
+        .fb-cta:hover {
+            background: #1a472a;
+        }
+
+        .fb-stats {
             display: flex;
             justify-content: space-between;
+            padding: 12px 16px;
             font-size: 12px;
             color: #65676b;
-        }
-
-        .fb-post-actions {
-            padding: 8px 0;
-            display: flex;
             border-top: 1px solid #e5e5e5;
         }
 
-        .fb-action-btn {
-            flex: 1;
-            padding: 8px;
-            background: none;
-            border: none;
-            font-size: 13px;
-            color: #65676b;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.2s;
-            border-right: 1px solid #e5e5e5;
-        }
-
-        .fb-action-btn:last-child {
-            border-right: none;
-        }
-
-        .fb-action-btn:hover {
-            background: #f0f2f5;
-        }
-
-        .fb-cta-button {
-            width: 100%;
-            padding: 10px 16px;
-            background: #e7f3ff;
-            border: 1px solid #bcd9f1;
-            color: #0a66c2;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-radius: 4px;
-            margin-top: 8px;
-        }
-
-        .fb-cta-button:hover {
-            background: #d0e5f9;
-            border-color: #0a66c2;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* ===== QUIZ SECTION ===== */
-        .demo-grid {
+        /* WhatsApp Sections */
+        .whatsapp-sections {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: 20px;
         }
 
-        .flow-section {
+        .whatsapp-window {
             background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .flow-header {
-            padding: 20px;
-            background: linear-gradient(135deg, #1a472a 0%, #2d6e48 100%);
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .flow-header.new-user {
-            background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
-        }
-
-        .flow-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stage {
-            padding: 20px;
-            flex: 1;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .stage.active {
-            display: flex;
-        }
-
-        /* ===== WhatsApp UI ===== */
-        .whatsapp-container {
-            width: 100%;
-            max-width: 400px;
-            height: 600px;
             border-radius: 12px;
             overflow: hidden;
-            background: #ece5dd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            height: 700px;
         }
 
-        .whatsapp-header {
-            background: #075e54;
+        .wa-header {
+            background: #128c7e;
             color: white;
             padding: 12px 16px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .whatsapp-messages {
+        .wa-variant-label {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .wa-chat {
             flex: 1;
             overflow-y: auto;
+            background: #ece5dd;
             padding: 16px;
             display: flex;
             flex-direction: column;
@@ -290,879 +198,584 @@
         }
 
         .message {
-            display: flex;
-            margin-bottom: 8px;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.5) rotateZ(-10deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) rotateZ(0deg);
-            }
-        }
-
-        @keyframes confetti {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-60px) rotate(360deg); opacity: 0; }
-        }
-
-        .message.sent {
-            justify-content: flex-end;
-        }
-
-        .message.received {
-            justify-content: flex-start;
-        }
-
-        .message-bubble {
-            max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.5;
-            word-wrap: break-word;
-        }
-
-        .message.sent .message-bubble {
-            background: #dcf8c6;
-            color: #000;
-            border-bottom-right-radius: 0;
-        }
-
-        .message.received .message-bubble {
-            background: white;
-            color: #000;
-            border-bottom-left-radius: 0;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .message-time {
-            font-size: 11px;
-            color: #999;
-            margin-top: 4px;
-            margin-left: 8px;
-        }
-
-        .message.sent .message-time {
-            margin-left: auto;
-            margin-right: 8px;
-        }
-
-        /* Progress Bar */
-        .progress-bar {
-            display: flex;
-            gap: 4px;
-            margin: 8px 0 12px 0;
-        }
-
-        .progress-dot {
-            flex: 1;
-            height: 3px;
-            background: #ddd;
-            border-radius: 2px;
-        }
-
-        .progress-dot.active {
-            background: #388e3c;
-            animation: popIn 0.4s ease;
-        }
-
-        /* Quiz Options */
-        .quiz-option {
-            padding: 12px 14px;
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 10px;
-            font-weight: 500;
-            width: 100%;
-            text-align: left;
-        }
-
-        .quiz-option:hover {
-            border-color: #388e3c;
-            background: #f0f7f0;
-            transform: translateX(4px);
-        }
-
-        .quiz-option.selected {
-            border-color: #388e3c;
-            background: #e8f5e9;
-            color: #1b5e20;
-            animation: popIn 0.3s ease;
-        }
-
-        /* Score Board */
-        .score-board {
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            padding: 16px;
-            border-radius: 12px;
-            margin: 12px 0;
-            text-align: center;
-            font-weight: 600;
-            color: #1b5e20;
-        }
-
-        .score-value {
-            font-size: 28px;
-            margin: 8px 0;
-        }
-
-        .streak {
-            display: inline-block;
-            background: #ffd700;
-            color: #333;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-left: 6px;
-        }
-
-        /* Confetti */
-        .confetti-piece {
-            position: fixed;
-            pointer-events: none;
-            animation: confetti 1s ease-out forwards;
-        }
-
-        .whatsapp-input {
             padding: 12px 16px;
-            background: #fff;
-            border-top: 1px solid #e5e5e5;
-            display: flex;
-            gap: 8px;
-            align-items: center;
+            border-radius: 8px;
+            max-width: 85%;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
-        .input-field {
-            flex: 1;
-            border: 1px solid #d0d0d0;
-            border-radius: 20px;
-            padding: 8px 14px;
-            font-size: 13px;
-            outline: none;
-            transition: border 0.2s;
-        }
-
-        .input-field:focus {
-            border-color: #075e54;
-        }
-
-        .input-field:disabled {
-            background: #f5f5f5;
-            color: #999;
-        }
-
-        .send-btn {
-            width: 36px;
-            height: 36px;
-            border: none;
-            border-radius: 50%;
-            background: #075e54;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.2s;
-        }
-
-        .send-btn:hover:not(:disabled) {
-            background: #064d46;
-            transform: scale(1.1);
-        }
-
-        .send-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .stage-nav {
-            padding: 12px;
-            background: #f5f5f5;
-            border-top: 1px solid #e5e5e5;
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            padding: 8px 16px;
-            border: 1px solid #ddd;
+        .message.bot {
             background: white;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
+            border-left: 4px solid #128c7e;
+            align-self: flex-start;
         }
 
-        .nav-btn:hover {
-            border-color: #1a472a;
-            background: #f9f9f9;
+        .message.user {
+            background: #dcf8c6;
+            align-self: flex-end;
+            text-align: right;
         }
 
-        .nav-btn.active {
-            background: #1a472a;
-            color: white;
-            border-color: #1a472a;
+        .quiz-question {
+            background: white;
+            border-left: 4px solid #128c7e;
+            align-self: flex-start;
+            padding: 12px;
+            border-radius: 8px;
         }
 
-        .emoji-reaction {
-            font-size: 24px;
-            animation: popIn 0.4s ease;
-            margin: 4px 0;
+        .quiz-question h4 {
+            color: #128c7e;
+            margin-bottom: 12px;
+            font-size: 13px;
         }
 
-        .start-button-area {
+        .quiz-options {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            padding: 20px;
+            gap: 8px;
+        }
+
+        .quiz-btn {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-btn:hover {
+            background: #e0e0e0;
+            border-color: #128c7e;
+        }
+
+        .quiz-btn.selected {
+            background: #dcf8c6;
+            border-color: #128c7e;
+            font-weight: 600;
+        }
+
+        .start-btn {
+            background: #128c7e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .start-btn:hover {
+            background: #0f7066;
+        }
+
+        .pdf-download-btn {
+            background: #ffc107;
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-download-btn:hover {
+            background: #ffb300;
+        }
+
+        .link-btn {
+            background: #128c7e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
             text-align: center;
         }
 
-        .start-button {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
+        .link-btn:hover {
+            background: #0f7066;
+        }
+
+        .link-display {
+            background: #f0f0f0;
+            border: 2px dashed #128c7e;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            font-size: 13px;
+            word-break: break-all;
+            color: #0084f0;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(56, 142, 60, 0.3);
         }
 
-        .start-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(56, 142, 60, 0.4);
-            background: linear-gradient(135deg, #2e7d34 0%, #558b2f 100%);
-        }
-
-        .start-button:active {
-            transform: translateY(0);
-        }
-
-        .start-intro {
-            font-size: 14px;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* ===== APP BUTTONS ===== */
-        .app-button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 100%;
+        .success-message {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
             margin-top: 12px;
         }
 
-        .app-button {
+        .hidden {
+            display: none;
+        }
+
+        .wa-input {
             padding: 12px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        .progress-indicator {
+            font-size: 12px;
+            color: #128c7e;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            text-align: center;
+            margin-bottom: 8px;
         }
 
-        .app-button.download {
-            background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
-            color: white;
-        }
-
-        .app-button.download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(56, 142, 60, 0.3);
-            background: linear-gradient(135deg, #2e7d34 0%, #558b2f 100%);
-        }
-
-        .app-button.open {
-            background: #075e54;
-            color: white;
-        }
-
-        .app-button.open:hover {
-            background: #064d46;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(7, 94, 84, 0.3);
-        }
-
-        @media (max-width: 1000px) {
-            .demo-grid {
+        @media (max-width: 1200px) {
+            .main-layout {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
 
-            header h1 {
-                font-size: 24px;
+            .whatsapp-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .facebook-feed {
+                max-width: 100%;
             }
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
+        .reset-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+            width: 100%;
+        }
 
-            .whatsapp-container {
-                height: 500px;
-            }
+        .reset-btn:hover {
+            background: #555;
+        }
 
-            .message-bubble {
-                max-width: 85%;
-            }
+        .variant-title {
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #1a472a;
+            padding: 10px;
+            background: #f5f5f5;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            font-size: 12px;
+            color: #1565c0;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .claim-message {
+            background: #e8f5e9;
+            border-left: 4px solid #128c7e;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 8px 0;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🌾 FarmRise Quiz Challenge 🎮</h1>
-            <p>✨ Make farming fun! Single banner, personalized flows ✨</p>
-        </header>
+        <div class="header">
+            <h1>🚀 FarmRise Pilot - Interactive A/B Testing Demo</h1>
+            <p>Click the ad → See both WhatsApp flows → Compare A/B variants</p>
+        </div>
 
-        <!-- ===== FACEBOOK FEED ===== -->
-        <div class="facebook-section">
-            <div class="facebook-feed-wrapper">
-                <div class="fb-post">
-                    <!-- Post Header -->
-                    <div class="fb-post-header">
-                        <div class="fb-post-author">
+        <div class="main-layout">
+            <!-- Facebook Feed Section -->
+            <div class="facebook-section">
+                <div style="text-align: center; margin-bottom: 15px; font-weight: 600; color: #1a472a;">
+                    📱 FACEBOOK FEED
+                </div>
+                <div class="facebook-feed">
+                    <div class="fb-post">
+                        <div class="fb-header">
                             <div class="fb-avatar">🌾</div>
-                            <div class="fb-author-info">
-                                <h3>FarmRise by Bayer</h3>
-                                <p>Sponsored • 2 hours ago</p>
+                            <div class="fb-info">
+                                <div class="fb-name">FarmRise</div>
+                                <div class="fb-time">2 hours ago <span class="fb-sponsored">Sponsored</span></div>
                             </div>
                         </div>
-                        <button class="fb-post-menu">⋯</button>
+                        <div class="fb-content">
+                            <div class="fb-text">
+                                <strong>🎯 Answer 3 Easy Questions & Win Rewards!</strong><br><br>
+                                Think you know your farming basics? Take our quick quiz and win exciting rewards! 🎁<br><br>
+                                ✅ Only 2 minutes<br>
+                                ✅ Super easy questions<br>
+                                ✅ Instant rewards!
+                            </div>
+                            <div class="fb-emoji">🌾🚜🌽</div>
+                            <button class="fb-cta" onclick="openABTesting()">
+                                💬 Answer Quiz on WhatsApp
+                            </button>
+                        </div>
+                        <div class="fb-stats">
+                            <span>👍 2.3K</span>
+                            <span>💬 456</span>
+                            <span>↗️ 1.2K</span>
+                        </div>
                     </div>
 
-                    <!-- Post Content -->
-                    <div class="fb-post-content">
-                        <div class="fb-post-text">
-                            <strong>🎯 Think you know farming? Prove it! 🎯</strong><br><br>
-                            Answer 3 fun agri questions on WhatsApp and win ₹100 reward! 🏆<br><br>
-                            <em style="color: #65676b; font-size: 12px;">Takes only 2 minutes • No reading required • Instant rewards</em>
-                        </div>
+                    <div class="info-box">
+                        <strong>ℹ️ How it works:</strong><br>
+                        1. Click the ad button<br>
+                        2. See both A/B test variants<br>
+                        3. Try both flows and compare!
+                    </div>
+                </div>
+            </div>
 
-                        <!-- Banner Image -->
-                        <div class="fb-banner-image">
-                            🎮 Quiz Challenge 🏆
+            <!-- WhatsApp A/B Testing Section -->
+            <div class="whatsapp-sections">
+                <!-- Variant A -->
+                <div class="whatsapp-window">
+                    <div class="wa-header">
+                        <span>FarmRise Quiz</span>
+                        <span class="wa-variant-label">Variant A (PDF Download)</span>
+                    </div>
+                    <div class="wa-chat" id="chatA">
+                        <div class="message bot">
+                            👋 Hi there! Welcome to FarmRise!
                         </div>
-
-                        <!-- CTA Button -->
-                        <button class="fb-cta-button" onclick="showBothFlows()">
-                            ⚡ Join Challenge on WhatsApp
+                        <div class="message bot">
+                            Answer 3 easy questions and win rewards! 🎁
+                        </div>
+                        <button class="start-btn" onclick="startQuizA()">
+                            🎮 Start Quiz
                         </button>
                     </div>
+                </div>
 
-                    <!-- Post Stats -->
-                    <div class="fb-post-stats">
-                        <span>👍 1.2K people like this</span>
-                        <span>💬 45 shares</span>
+                <!-- Variant B -->
+                <div class="whatsapp-window">
+                    <div class="wa-header">
+                        <span>FarmRise Quiz</span>
+                        <span class="wa-variant-label">Variant B (Direct Reward)</span>
                     </div>
-
-                    <!-- Post Actions -->
-                    <div class="fb-post-actions">
-                        <button class="fb-action-btn">👍 Like</button>
-                        <button class="fb-action-btn">💬 Comment</button>
-                        <button class="fb-action-btn">↗ Share</button>
+                    <div class="wa-chat" id="chatB">
+                        <div class="message bot">
+                            👋 Hi there! Welcome to FarmRise!
+                        </div>
+                        <div class="message bot">
+                            Answer 3 easy questions and win rewards! 🎁
+                        </div>
+                        <button class="start-btn" onclick="startQuizB()">
+                            🎮 Start Quiz
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ===== WHATSAPP FLOWS ===== -->
-        <div class="demo-grid">
-            <!-- ===== NEW USER FLOW ===== -->
-            <div class="flow-section">
-                <div class="flow-header new-user">🎯 New Farmer Flow</div>
-                
-                <div class="flow-content">
-                    <!-- Start Screen -->
-                    <div class="stage active" id="newUserStage0">
-                        <div class="whatsapp-container">
-                            <div class="whatsapp-header">
-                                🌾 FarmRise Quiz Challenge 🎮
-                                <span style="font-size: 11px;">Online</span>
-                            </div>
-                            <div class="whatsapp-messages">
-                                <div class="start-button-area">
-                                    <div style="font-size: 32px;">🎮</div>
-                                    <div class="start-intro">
-                                        <strong>Ready to test your farming knowledge?</strong><br>
-                                        Answer 3 quick questions and win ₹100!
-                                    </div>
-                                    <button class="start-button" onclick="startNewUserQuiz()">
-                                        🚀 Start Quiz
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="whatsapp-input" style="border-top: none;">
-                                <input type="text" class="input-field" placeholder="Tap to start..." disabled>
-                                <button class="send-btn" disabled style="opacity: 0.5;">→</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Welcome & Quiz -->
-                    <div class="stage" id="newUserStage1">
-                        <div class="whatsapp-container">
-                            <div class="whatsapp-header">
-                                🌾 FarmRise Quiz Challenge 🎮
-                                <span style="font-size: 11px;">Online</span>
-                            </div>
-                            <div class="whatsapp-messages" id="newUserMessages"></div>
-                            <div class="whatsapp-input">
-                                <input type="text" class="input-field" id="newUserInput" placeholder="Type message..." disabled value="Let's start!">
-                                <button class="send-btn" disabled style="opacity: 0.5;">✓</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quiz Questions -->
-                    <div class="stage" id="newUserStage2">
-                        <div class="whatsapp-container">
-                            <div class="whatsapp-header">
-                                🎮 Quiz in Progress
-                                <span style="font-size: 11px;">Online</span>
-                            </div>
-                            <div class="whatsapp-messages" id="newUserQuizMessages"></div>
-                            <div style="padding: 12px 16px; background: #fff;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Reward -->
-                    <div class="stage" id="newUserStage3">
-                        <div class="whatsapp-container">
-                            <div class="whatsapp-header">
-                                🏆 You Won! 🏆
-                                <span style="font-size: 11px;">Online</span>
-                            </div>
-                            <div class="whatsapp-messages" id="newUserRewardMessages"></div>
-                            <div class="whatsapp-input">
-                                <input type="text" class="input-field" placeholder="Tap button to claim..." disabled>
-                                <button class="send-btn" disabled style="opacity: 0.5;">📱</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stage-nav">
-                    <button class="nav-btn active" onclick="showNewUserStage(0)">Start</button>
-                    <button class="nav-btn" onclick="showNewUserStage(1)">Welcome</button>
-                    <button class="nav-btn" onclick="showNewUserStage(2)">Quiz</button>
-                    <button class="nav-btn" onclick="showNewUserStage(3)">Reward 🏆</button>
-                    <button class="nav-btn" onclick="resetNewUser()">Reset</button>
+        <!-- Quiz Data -->
+        <div class="hidden" id="quizData">
+            <div class="quiz-q1">
+                <h4>Question 1 of 3:</h4>
+                <p><strong>What is the most important nutrient for plant growth?</strong></p>
+                <div class="options">
+                    <button class="option">A) Nitrogen (N)</button>
+                    <button class="option">B) Sunscreen (SPF)</button>
+                    <button class="option">C) Sugar (Candy)</button>
+                    <button class="option">D) Electricity</button>
                 </div>
             </div>
 
-            <!-- ===== EXISTING USER FLOW ===== -->
-            <div class="flow-section">
-                <div class="flow-header">👤 Loyal Farmer Flow</div>
-                
-                <div class="flow-content">
-                    <!-- Start Screen -->
-                    <div class="stage active" id="existingUserStage0">
-                        <div class="whatsapp-container">
-                            <div class="whatsapp-header">
-                                🌾 FarmRise Rewards 🎁
-                                <span style="font-size: 11px;">Online</span>
-                            </div>
-                            <div class="whatsapp-messages">
-                                <div class="start-button-area">
-                                    <div style="font-size: 32px;">👑</div>
-                                    <div class="start-intro">
-                                        <strong>Welcome back, Member!</strong><br>
-                                        You've unlocked an exclusive bonus!
-                                    </div>
-                                    <button class="start-button" onclick="startExistingUserFlow()" style="background: linear-gradient(135deg, #1a472a 0%, #2d6e48 100%); box-shadow: 0 4px 12px rgba(26, 71, 42, 0.3);">
-                                        🎁 Claim Bonus
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="whatsapp-input" style="border-top: none;">
-                                <input type="text" class="input-field" placeholder="Tap to claim..." disabled>
-                                <button class="send-btn" disabled style="opacity: 0.5;">→</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Welcome Recognition -->
-                    <div class="stage" id="existingUserStage1">
-                        <div class="whatsapp-container">
-                            <div class="whatsapp-header">
-                                🌾 FarmRise Rewards 🎁
-                                <span style="font-size: 11px;">Online</span>
-                            </div>
-                            <div class="whatsapp-messages" id="existingUserMessages"></div>
-                            <div class="whatsapp-input">
-                                <input type="text" class="input-field" id="existingUserInput" placeholder="Type message..." disabled>
-                                <button class="send-btn" disabled style="opacity: 0.5;">✓</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Open App -->
-                    <div class="stage" id="existingUserStage2">
-                        <div class="whatsapp-container">
-                            <div class="whatsapp-header">
-                                🎉 Welcome Back Champion! 🎉
-                                <span style="font-size: 11px;">Online</span>
-                            </div>
-                            <div class="whatsapp-messages" id="existingUserSuccessMessages"></div>
-                            <div class="whatsapp-input">
-                                <input type="text" class="input-field" placeholder="Tap button to open..." disabled>
-                                <button class="send-btn" disabled style="opacity: 0.5;">📱</button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="quiz-q2">
+                <h4>Question 2 of 3:</h4>
+                <p><strong>What do farmers call the first 3 months of a crop?</strong></p>
+                <div class="options">
+                    <button class="option">A) The vacation phase</button>
+                    <button class="option">B) The establishment phase</button>
+                    <button class="option">C) The sleeping phase</button>
+                    <button class="option">D) The party phase</button>
                 </div>
+            </div>
 
-                <div class="stage-nav">
-                    <button class="nav-btn active" onclick="showExistingUserStage(0)">Start</button>
-                    <button class="nav-btn" onclick="showExistingUserStage(1)">Welcome</button>
-                    <button class="nav-btn" onclick="showExistingUserStage(2)">Bonus 🎁</button>
-                    <button class="nav-btn" onclick="resetExistingUser()">Reset</button>
+            <div class="quiz-q3">
+                <h4>Question 3 of 3:</h4>
+                <p><strong>Which of these is NOT a crop?</strong></p>
+                <div class="options">
+                    <button class="option">A) Wheat</button>
+                    <button class="option">B) Rice</button>
+                    <button class="option">C) Helicopter</button>
+                    <button class="option">D) Sugarcane</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ===== QUIZ DATA =====
-        const QUIZ = [
+        let quizStateA = { current: 0, answers: [] };
+        let quizStateB = { current: 0, answers: [] };
+        const questions = [
             {
-                q: "🌽 Which crop needs the most water during summer?",
-                options: [
-                    { text: "Wheat", emoji: "🌾" },
-                    { text: "Corn", emoji: "🌽" },
-                    { text: "Cotton", emoji: "🌸" }
-                ],
-                reactions: ["🌽 Corn power!", "💧 Great choice!"]
+                text: "What is the most important nutrient for plant growth?",
+                options: ["A) Nitrogen (N)", "B) Sunscreen (SPF)", "C) Sugar (Candy)", "D) Electricity"],
+                answer: 0
             },
             {
-                q: "🐛 What's the best way to prevent armyworm?",
-                options: [
-                    { text: "Neem spray", emoji: "🌿" },
-                    { text: "Chemical pesticide", emoji: "🧪" },
-                    { text: "Both (based on severity)", emoji: "⚖️" }
-                ],
-                reactions: ["🧠 Smart thinking!", "🌿 Natural choice!"]
+                text: "What do farmers call the first 3 months of a crop?",
+                options: ["A) The vacation phase", "B) The establishment phase", "C) The sleeping phase", "D) The party phase"],
+                answer: 1
             },
             {
-                q: "💰 Where do farmers get the BEST prices?",
-                options: [
-                    { text: "Local mandis", emoji: "🏪" },
-                    { text: "Direct buyers", emoji: "🤝" },
-                    { text: "FarmRise (obviously! 😉)", emoji: "⭐" }
-                ],
-                reactions: ["😎 You know us!", "🏆 Smart farmer!"]
+                text: "Which of these is NOT a crop?",
+                options: ["A) Wheat", "B) Rice", "C) Helicopter", "D) Sugarcane"],
+                answer: 2
             }
         ];
 
-        const REACTIONS = {
-            quick: ["⚡ Lightning fast!", "🚀 Super quick!"]
-        };
-
-        let newUserQuizProgress = 0;
-        let newUserAnswers = [];
-        let newUserScore = 0;
-
-        function showBothFlows() {
-            resetNewUser();
-            resetExistingUser();
-            setTimeout(() => {
-                document.querySelector('.demo-grid').scrollIntoView({ behavior: 'smooth' });
-            }, 300);
-        }
-
-        function getCurrentTime() {
-            const now = new Date();
-            return now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-        }
-
-        function addMessage(containerId, type, text, isReaction = false) {
-            const msgs = document.getElementById(containerId);
-            const msg = document.createElement('div');
-            msg.className = `message ${type}`;
+        function openABTesting() {
+            // Clear previous state
+            quizStateA = { current: 0, answers: [] };
+            quizStateB = { current: 0, answers: [] };
             
-            const time = getCurrentTime();
-            const content = isReaction ? 
-                `<div class="emoji-reaction">${text}</div>` :
-                `<div class="message-bubble">${text}</div>`;
-            
-            msg.innerHTML = `
-                <div style="display: flex; flex-direction: ${type === 'sent' ? 'row-reverse' : 'row'}; align-items: flex-end; gap: 8px; width: 100%;">
-                    ${content}
-                    <div class="message-time" style="${type === 'sent' ? 'margin-right: auto;' : 'margin-left: auto;'}">${time}</div>
+            // Reset chats
+            document.getElementById('chatA').innerHTML = `
+                <div class="message bot">
+                    👋 Hi there! Welcome to FarmRise!
                 </div>
+                <div class="message bot">
+                    Answer 3 easy questions and win rewards! 🎁
+                </div>
+                <button class="start-btn" onclick="startQuizA()">
+                    🎮 Start Quiz
+                </button>
             `;
-            msgs.appendChild(msg);
-            msgs.scrollTop = msgs.scrollHeight;
-        }
-
-        function createConfetti() {
-            for (let i = 0; i < 15; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti-piece';
-                confetti.textContent = ['🎉', '🎊', '🏆', '⭐', '💰', '🌾'][Math.floor(Math.random() * 6)];
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.top = '-20px';
-                confetti.style.fontSize = '20px';
-                document.body.appendChild(confetti);
-                
-                setTimeout(() => confetti.remove(), 1000);
-            }
-        }
-
-        function startNewUserQuiz() {
-            addMessage('newUserMessages', 'sent', "Let's start!");
             
-            setTimeout(() => {
-                addMessage('newUserMessages', 'received', `🎮 Hey Farmer! Welcome to FarmRise Quiz Challenge! 🌾\n\nI'm Quiz Bot 🤖 and I've got 3 FUN questions for you!\n\n✨ Each right answer = 1 point\n⚡ Answer quick = bonus streak\n🏆 Get 3/3 = ₹100 reward!\n\nLet's go! 🚀`);
-                
-                setTimeout(() => {
-                    showNewUserStage(2);
-                    displayNewUserQuizQuestion();
-                }, 1200);
-            }, 600);
+            document.getElementById('chatB').innerHTML = `
+                <div class="message bot">
+                    👋 Hi there! Welcome to FarmRise!
+                </div>
+                <div class="message bot">
+                    Answer 3 easy questions and win rewards! 🎁
+                </div>
+                <button class="start-btn" onclick="startQuizB()">
+                    🎮 Start Quiz
+                </button>
+            `;
         }
 
-        function displayNewUserQuizQuestion() {
-            const quizMsgs = document.getElementById('newUserQuizMessages');
-            
-            if (newUserQuizProgress === 0) {
-                quizMsgs.innerHTML = '';
+        function startQuizA() {
+            showQuestionA();
+        }
+
+        function startQuizB() {
+            showQuestionB();
+        }
+
+        function showQuestionA() {
+            if (quizStateA.current >= 3) {
+                completeQuizA();
+                return;
             }
 
-            const quiz = QUIZ[newUserQuizProgress];
-            const progress = newUserQuizProgress + 1;
-            const totalQuestions = QUIZ.length;
+            const q = questions[quizStateA.current];
+            let html = `
+                <div class="progress-indicator">Question ${quizStateA.current + 1} of 3</div>
+                <div class="quiz-question">
+                    <h4>${q.text}</h4>
+                    <div class="quiz-options">
+            `;
 
-            const progressDiv = document.createElement('div');
-            progressDiv.style.marginTop = '12px';
-            progressDiv.innerHTML = `<div class="progress-bar">
-                ${Array.from({length: totalQuestions}, (_, i) => 
-                    `<div class="progress-dot ${i < progress ? 'active' : ''}"></div>`
-                ).join('')}
-            </div>`;
+            q.options.forEach((opt, idx) => {
+                html += `<button class="quiz-btn" onclick="answerQuestionA(${idx})">${opt}</button>`;
+            });
 
-            addMessage('newUserQuizMessages', 'received', `<strong>Question ${progress}/${totalQuestions}</strong>\n\n${quiz.q}`);
-            
-            setTimeout(() => {
-                const optionsDiv = document.createElement('div');
-                optionsDiv.style.marginTop = '12px';
-                quiz.options.forEach((opt, idx) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'quiz-option';
-                    btn.textContent = `${opt.emoji} ${String.fromCharCode(65 + idx)}) ${opt.text}`;
-                    btn.onclick = () => handleNewUserAnswer(idx, opt.text);
-                    optionsDiv.appendChild(btn);
-                });
-                
-                const msgs = document.getElementById('newUserQuizMessages');
-                msgs.appendChild(progressDiv);
-                msgs.appendChild(optionsDiv);
-                msgs.scrollTop = msgs.scrollHeight;
-            }, 400);
+            html += `</div></div>`;
+
+            document.getElementById('chatA').innerHTML += html;
+            document.getElementById('chatA').scrollTop = document.getElementById('chatA').scrollHeight;
         }
 
-        function handleNewUserAnswer(idx, answer) {
-            newUserAnswers.push(answer);
-            newUserScore += 10;
+        function showQuestionB() {
+            if (quizStateB.current >= 3) {
+                completeQuizB();
+                return;
+            }
+
+            const q = questions[quizStateB.current];
+            let html = `
+                <div class="progress-indicator">Question ${quizStateB.current + 1} of 3</div>
+                <div class="quiz-question">
+                    <h4>${q.text}</h4>
+                    <div class="quiz-options">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                html += `<button class="quiz-btn" onclick="answerQuestionB(${idx})">${opt}</button>`;
+            });
+
+            html += `</div></div>`;
+
+            document.getElementById('chatB').innerHTML += html;
+            document.getElementById('chatB').scrollTop = document.getElementById('chatB').scrollHeight;
+        }
+
+        function answerQuestionA(idx) {
+            const q = questions[quizStateA.current];
+            quizStateA.answers.push(idx);
             
-            addMessage('newUserQuizMessages', 'sent', `${QUIZ[newUserQuizProgress].options[idx].emoji} ${answer}`);
+            let chatDiv = document.getElementById('chatA');
             
-            const reactions = REACTIONS.quick;
-            const reaction = reactions[Math.floor(Math.random() * reactions.length)];
+            if (idx === q.answer) {
+                chatDiv.innerHTML += `<div class="message bot">✅ Correct! Great job!</div>`;
+            } else {
+                chatDiv.innerHTML += `<div class="message bot">😅 Not quite! The answer was: ${q.options[q.answer]}</div>`;
+            }
+
+            quizStateA.current++;
+            
             setTimeout(() => {
-                addMessage('newUserQuizMessages', 'received', reaction, true);
-            }, 300);
-            
-            setTimeout(() => {
-                if (newUserQuizProgress < QUIZ.length - 1) {
-                    const nextReaction = QUIZ[newUserQuizProgress].reactions[Math.floor(Math.random() * QUIZ[newUserQuizProgress].reactions.length)];
-                    addMessage('newUserQuizMessages', 'received', nextReaction);
-                    newUserQuizProgress++;
-                    
-                    setTimeout(() => {
-                        const quizMsgs = document.getElementById('newUserQuizMessages');
-                        const optionsDiv = quizMsgs.querySelector('div[style*="marginTop"]');
-                        if (optionsDiv) optionsDiv.remove();
-                        const progressDiv = quizMsgs.querySelector('.progress-bar');
-                        if (progressDiv) progressDiv.parentElement.remove();
-                        
-                        displayNewUserQuizQuestion();
-                    }, 600);
+                if (quizStateA.current < 3) {
+                    showQuestionA();
                 } else {
-                    addMessage('newUserQuizMessages', 'received', '🎉 Quiz Complete! All answered!');
-                    
-                    setTimeout(() => {
-                        showNewUserStage(3);
-                        showNewUserReward();
-                    }, 800);
+                    completeQuizA();
                 }
-            }, 700);
+            }, 1500);
         }
 
-        function showNewUserReward() {
-            const rewardMsgs = document.getElementById('newUserRewardMessages');
-            rewardMsgs.innerHTML = '';
+        function answerQuestionB(idx) {
+            const q = questions[quizStateB.current];
+            quizStateB.answers.push(idx);
             
-            createConfetti();
+            let chatDiv = document.getElementById('chatB');
             
-            addMessage('newUserRewardMessages', 'received', `🎉🎉🎉 BOOM! YOU WON! 🎉🎉🎉\n\nCongrats, Farming Champion! 🏆\n\nYou nailed all 3 questions!`);
-            
-            setTimeout(() => {
-                addMessage('newUserRewardMessages', 'received', `\n<div class="score-board">
-                    Final Score: <div class="score-value">30/30 🌟</div>
-                    Streak: 3 correct in a row <span class="streak">🔥 ON FIRE!</span>
-                </div>`);
-            }, 600);
-            
-            setTimeout(() => {
-                addMessage('newUserRewardMessages', 'received', `💰 ₹100 Reward Unlocked!\n\n✨ Your instant reward is ready to claim!\n\n📱 Download FarmRise App to claim it now!`);
-                
-                // Add app buttons
-                const msgDiv = document.createElement('div');
-                msgDiv.className = 'message received';
-                msgDiv.innerHTML = `
-                    <div class="app-button-group">
-                        <button class="app-button download" onclick="simulateDownload('new')">
-                            📥 Download FarmRise App
-                        </button>
-                    </div>
-                `;
-                document.getElementById('newUserRewardMessages').appendChild(msgDiv);
-                document.getElementById('newUserRewardMessages').scrollTop = document.getElementById('newUserRewardMessages').scrollHeight;
-            }, 1200);
-        }
-
-        function startExistingUserFlow() {
-            addMessage('existingUserMessages', 'sent', 'Hi!');
-            
-            setTimeout(() => {
-                addMessage('existingUserMessages', 'received', `👑 Hey Champion! Welcome back! 🌾\n\nI detected you're part of the FarmRise family! 🎉\n\nWe've got something SPECIAL just for loyal farmers like you...`);
-                
-                setTimeout(() => {
-                    addMessage('existingUserMessages', 'received', `💰 ₹100 Bonus Unlocked!\n\n✨ No quiz needed for members!\n✨ Instant reward for your loyalty!`);
-                    
-                    setTimeout(() => {
-                        showExistingUserStage(2);
-                        showExistingUserSuccess();
-                    }, 800);
-                }, 800);
-            }, 600);
-        }
-
-        function showExistingUserSuccess() {
-            const successMsgs = document.getElementById('existingUserSuccessMessages');
-            successMsgs.innerHTML = '';
-            
-            createConfetti();
-            
-            addMessage('existingUserSuccessMessages', 'received', `👑 Welcome Back, Farming Legend! 👑\n\n🎖️ Member Status: ACTIVE ✅\n⭐ Loyalty Points: MAXED\n💰 Reward Ready: ₹100`);
-            
-            setTimeout(() => {
-                addMessage('existingUserSuccessMessages', 'received', `\n<div class="score-board">
-                    Exclusive Member Offer
-                    <div class="score-value">₹100 Bonus</div>
-                    Instant claim • No quiz • No wait!
-                </div>`);
-            }, 600);
-            
-            setTimeout(() => {
-                addMessage('existingUserSuccessMessages', 'received', `🔗 Tap button to open FarmRise App and claim your bonus instantly!`);
-                
-                // Add app buttons
-                const msgDiv = document.createElement('div');
-                msgDiv.className = 'message received';
-                msgDiv.innerHTML = `
-                    <div class="app-button-group">
-                        <button class="app-button open" onclick="simulateOpen('existing')">
-                            📱 Open FarmRise App
-                        </button>
-                    </div>
-                `;
-                document.getElementById('existingUserSuccessMessages').appendChild(msgDiv);
-                document.getElementById('existingUserSuccessMessages').scrollTop = document.getElementById('existingUserSuccessMessages').scrollHeight;
-            }, 1200);
-        }
-
-        function simulateDownload(type) {
-            if (type === 'new') {
-                addMessage('newUserRewardMessages', 'sent', '📥 Downloading...');
-                setTimeout(() => {
-                    addMessage('newUserRewardMessages', 'received', `✅ Download started!\n\n📱 The FarmRise App is downloading to your device.\n\nOnce installed, open it and sign up using this WhatsApp chat to claim your ₹100 reward! 🎉`);
-                }, 600);
+            if (idx === q.answer) {
+                chatDiv.innerHTML += `<div class="message bot">✅ Correct! Great job!</div>`;
+            } else {
+                chatDiv.innerHTML += `<div class="message bot">😅 Not quite! The answer was: ${q.options[q.answer]}</div>`;
             }
+
+            quizStateB.current++;
+            
+            setTimeout(() => {
+                if (quizStateB.current < 3) {
+                    showQuestionB();
+                } else {
+                    completeQuizB();
+                }
+            }, 1500);
         }
 
-        function simulateOpen(type) {
-            if (type === 'existing') {
-                addMessage('existingUserSuccessMessages', 'sent', '📱 Opening app...');
-                setTimeout(() => {
-                    addMessage('existingUserSuccessMessages', 'received', `✅ Opening FarmRise App!\n\n🎉 Your ₹100 bonus has been credited to your account!\n\n✨ Thank you for being a loyal member! 🌾`);
-                }, 600);
-            }
+        function completeQuizA() {
+            let chatDiv = document.getElementById('chatA');
+            chatDiv.innerHTML += `
+                <div class="message bot">
+                    🎉 <strong>Quiz Complete!</strong><br><br>
+                    You scored ${quizStateA.answers.filter((a, i) => a === questions[i].answer).length}/3!
+                </div>
+                <div class="message bot">
+                    📥 Download the FarmRise Product Info PDF to uncover your reward!
+                </div>
+                <button class="pdf-download-btn" onclick="revealRewardA()">
+                    📄 Download PDF & Uncover Reward
+                </button>
+            `;
+            chatDiv.scrollTop = chatDiv.scrollHeight;
         }
 
-        function showNewUserStage(num) {
-            ['newUserStage0', 'newUserStage1', 'newUserStage2', 'newUserStage3'].forEach((id, i) => {
-                document.getElementById(id).classList.toggle('active', i === num);
-            });
+        function completeQuizB() {
+            let chatDiv = document.getElementById('chatB');
+            chatDiv.innerHTML += `
+                <div class="message bot">
+                    🎉 <strong>Quiz Complete!</strong><br><br>
+                    You scored ${quizStateB.answers.filter((a, i) => a === questions[i].answer).length}/3!
+                </div>
+                <div class="message bot">
+                    ✨ Congratulations! You have won <strong>₹10</strong>! 🎁<br><br>
+                    Claim your reward on the FarmRise app now!
+                </div>
+                <button class="link-btn" onclick="claimRewardB()">
+                    🎁 Claim Reward on FarmRise App
+                </button>
+            `;
+            chatDiv.scrollTop = chatDiv.scrollHeight;
         }
 
-        function resetNewUser() {
-            showNewUserStage(0);
-            document.getElementById('newUserMessages').innerHTML = '';
-            document.getElementById('newUserQuizMessages').innerHTML = '';
-            document.getElementById('newUserRewardMessages').innerHTML = '';
-            newUserQuizProgress = 0;
-            newUserAnswers = [];
-            newUserScore = 0;
+        function revealRewardA() {
+            let chatDiv = document.getElementById('chatA');
+            chatDiv.innerHTML += `
+                <div class="message bot">
+                    📥 PDF downloaded successfully!
+                </div>
+                <div class="message bot">
+                    ✨ Congratulations! You have won <strong>₹10</strong>! 🎁
+                </div>
+                <div class="claim-message">
+                    📱 <strong>Claim your reward here:</strong><br><br>
+                    <div class="link-display">
+                        farmrise.app/claim?reward=10&user=quiz123
+                    </div>
+                </div>
+                <div class="message bot">
+                    Tap the link above to open FarmRise app and claim your ₹10 reward!
+                </div>
+                <div class="success-message">
+                    ✅ VARIANT A: PDF Download + Reward Link
+                </div>
+                <button class="reset-btn" onclick="openABTesting()">↻ Reset Quiz</button>
+            `;
+            chatDiv.scrollTop = chatDiv.scrollHeight;
         }
 
-        function showExistingUserStage(num) {
-            ['existingUserStage0', 'existingUserStage1', 'existingUserStage2'].forEach((id, i) => {
-                document.getElementById(id).classList.toggle('active', i === num);
-            });
-        }
-
-        function resetExistingUser() {
-            showExistingUserStage(0);
-            document.getElementById('existingUserMessages').innerHTML = '';
-            document.getElementById('existingUserSuccessMessages').innerHTML = '';
+        function claimRewardB() {
+            let chatDiv = document.getElementById('chatB');
+            chatDiv.innerHTML += `
+                <div class="message bot">
+                    ✅ Opening FarmRise App...
+                </div>
+                <div class="message bot">
+                    Your ₹10 reward has been added to your account! 🎉
+                </div>
+                <div class="success-message">
+                    ✅ VARIANT B: Direct Reward (No PDF)
+                </div>
+                <button class="reset-btn" onclick="openABTesting()">↻ Reset Quiz</button>
+            `;
+            chatDiv.scrollTop = chatDiv.scrollHeight;
         }
     </script>
 </body>
